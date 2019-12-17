@@ -3,94 +3,110 @@ import {
   CodeSurferColumns,
   Step,
 } from "code-surfer";
-import { github, vsDark } from "@code-surfer/themes";
+import { github, vsDark, nightOwl, oceanicNext  } from "@code-surfer/themes";
+import App from './App.jsx';
 
 export const theme = vsDark;
 
-# Hello 👋
+# Hello XG 👋
 
-You are using [MDX Deck](https://github.com/jxnblk/mdx-deck) and [Code Surfer](https://codesurfer.pomb.us)
+Using Matchers in Jest
 
 ---
 
 <CodeSurfer>
 
-```js title="This is a title" subtitle="and this a subtitle"
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : ipsum.sit;
-  dolor = sit - amet(dolor);
-  return sit
-    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
-    : [];
-}
+```js title="Common Matchers"
+test('two plus two is four', () => {
+  expect(2 + 2).toBe(4);
+});
 
-function incididunt(ipsum, ut = 1) {
-  ut = labore.et(amet(ut), 0);
-  const sit = ipsum == null ? 0 : ipsum.sit;
+test('object assignment', () => {
+  const data = {one: 1};
+  data['two'] = 2;
+  expect(data).toEqual({one: 1, two: 2});
+});
 
-  if (!sit || ut < 1) {
-    return [];
-  }
-
-  let dolore = 0;
-  let magna = 0;
-  const aliqua = new eiusmod(labore.ut(sit / ut));
-
-  while (dolore < sit) {
-    aliqua[magna++] = consectetur(
-      ipsum,
-      dolore,
-      (dolore += ut)
-    );
-  }
-
-  return aliqua;
-}
 ```
 
-```js
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : ipsum.sit;
-  dolor = sit - amet(dolor);
-  return sit
-    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
-    : [];
-}
 
-function adipiscing(...elit) {
-  if (!elit.sit) {
-    return [];
-  }
+```diff 1,2,3
 
-  const sed = elit[0];
-  return eiusmod.tempor(sed) ? sed : [sed];
-}
-
-function incididunt(ipsum, ut = 1) {
-  ut = labore.et(amet(ut), 0);
-  const sit = ipsum == null ? 0 : ipsum.sit;
-
-  if (!sit || ut < 1) {
-    return [];
-  }
-
-  let dolore = 0;
-  let magna = 0;
-  const aliqua = new eiusmod(labore.ut(sit / ut));
-
-  while (dolore < sit) {
-    aliqua[magna++] = consectetur(
-      ipsum,
-      dolore,
-      (dolore += ut)
-    );
-  }
-
-  return aliqua;
-}
 ```
 
-```diff 1[10:14],2[15:19],3[22:27],10:12
+
+```js 5:9
+test('two plus two is four', () => {
+  expect(2 + 2).toBe(4);
+});
+
+test('object assignment', () => {
+  const data = {one: 1};
+  data['two'] = 2;
+  expect(data).toEqual({one: 1, two: 2});
+});
+
+```
+
+</CodeSurfer>
+
+
+---
+
+<CodeSurferColumns themes={[oceanicNext, nightOwl]}>
+  <Step title="Truthiness">
+
+  ```js
+  test('null', () => {
+    const n = null;
+    expect(n).toBeNull();
+    expect(n).toBeDefined();
+    expect(n).not.toBeUndefined();
+    expect(n).not.toBeTruthy();
+    expect(n).toBeFalsy();
+  });
+  ```
+
+  ```js
+    test('zero', () => {
+      const z = 0;
+      expect(z).not.toBeNull();
+      expect(z).toBeDefined();
+      expect(z).not.toBeUndefined();
+      expect(z).not.toBeTruthy();
+      expect(z).toBeFalsy();
+  });
+  ```
+
+  </Step>
+</CodeSurferColumns>
+
+---
+
+<CodeSurfer>
+
+```js title="Numbers"
+    test('two plus two', () => {
+      const value = 2 + 2;
+      expect(value).toBeGreaterThan(3);
+      expect(value).toBeGreaterThanOrEqual(3.5);
+      expect(value).toBeLessThan(5);
+      expect(value).toBeLessThanOrEqual(4.5);
+
+      // toBe and toEqual are equivalent for numbers
+      expect(value).toBe(4);
+      expect(value).toEqual(4);
+    });
+
+    test('adding floating point numbers', () => {
+      const value = 0.1 + 0.2;
+      //expect(value).toBe(0.3); This won't work because of rounding error
+      expect(value).toBeCloseTo(0.3); // This works.
+    });
+    
+```
+
+```diff 12,13,14,15,16
 
 ```
 
@@ -98,55 +114,131 @@ function incididunt(ipsum, ut = 1) {
 
 ---
 
-<CodeSurferColumns themes={[vsDark, github]}>
+[0.1 + 0.2 ? 0.3 ](https://0.30000000000000004.com)
 
-<Step>
+---
 
-```js
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
+
+<CodeSurfer>
+
+```js title="Strings"
+    test('there is no I in team', () => {
+      expect('team').not.toMatch(/I/);
+    });
+
+    test('but there is a "stop" in Christoph', () => {
+      expect('Christoph').toMatch(/stop/);
+    });
 ```
 
-```js
-const minim = (ad, enim) => dolore.magna(ad / enim);
+```js title="Arrays and iterables"
+const shoppingList = [
+  'diapers',
+  'kleenex',
+  'trash bags',
+  'paper towels',
+  'beer',
+];
+
+test('the shopping list has beer on it', () => {
+  expect(shoppingList).toContain('beer');
+  expect(new Set(shoppingList)).toContain('beer');
+});
 ```
 
-</Step>
+</CodeSurfer>
 
-<Step>
+---
 
-```js
-const lorem = (ipsum, dolor, sit) => {
-  const amet = dolor - ipsum;
-  return consectetur.adipiscing(
-    {
-      elit: sed.eiusmod(sit - dolor) / amet + 2,
-    },
-    (tempor, incididunt) => ipsum + amet * incididunt
-  );
-};
+# Examples
 
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
-```
+---
 
-```js
-const minim = (ad, enim) => dolore.magna(ad / enim);
+<CodeSurferColumns themes={[vsDark, nightOwl]}>
+  <Step>
 
-const sed = (eiusmod, tempor, incididunt) => {
-  const ut = tempor - eiusmod;
-  return labore.et(
-    {
-      amet: dolore.magna(incididunt - tempor) / ut + 2,
-    },
-    (aliqua, elit) => eiusmod + ut * elit
-  );
-};
-```
+  ```js title="Testing.js"
+  const isGreaterThan10 = (numbers) => {
+      
+  }
 
-</Step>
+  module.exports = {isGreaterThan10};
+  ```
+
+  ```js title="Testing.test.js"
+  const {isGreaterThan10} = require('./Testing');
+  ```
+
+  </Step>
+
+  <Step>
+
+  ```js title="Testing.js"
+  const isGreaterThan10 = (numbers) => {
+    return numbers.filter(number => {
+        return number > 10;
+    })
+  }
+
+  module.exports = {isGreaterThan10};
+  ```
+
+  ```js title="Testing.test.js"
+  const {isGreaterThan10} = require('./Testing');
+
+  test("is greater than 10", () => {
+      const data = [14, 5, 8, 13];
+      const result = [14, 13];
+      expect(isGreaterThan10(data)).toEqual(result);
+  })
+  ```
+
+  </Step>
 
 </CodeSurferColumns>
 
 ---
 
-docs:  
-[codesurfer.pomb.us](https://codesurfer.pomb.us)
+<CodeSurferColumns themes={[vsDark, nightOwl]}>
+  <Step>
+
+  ```js title="Testing.js"
+  const isPalindrome = (word) => {
+      
+  }
+
+  module.exports = {isPalindrome};
+  ```
+
+  ```js title="Testing.test.js"
+  const {isPalindrome} = require('./Testing');
+  ```
+
+  </Step>
+
+  <Step>
+
+  ```js title="Testing.js"
+  const isPalindrome = (word) => {
+      if (word === word.split('').reverse().join('')){
+          return true;
+      } else {
+          return false;
+      }
+  }
+
+  module.exports = {isPalindrome};
+  ```
+
+  ```js title="Testing.test.js"
+  const {isPalindrome} = require('./Testing');
+
+  test.each(["racecar", "civic", "refer", "level"])
+  ("testing %s for palindrome", (word) => {
+      expect(isPalindrome(word)).toBeTruthy()
+  })
+  ```
+
+  </Step>
+
+</CodeSurferColumns>

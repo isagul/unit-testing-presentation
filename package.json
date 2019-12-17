@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "code-surfer": "3.0.0",
+    "jest": "^24.9.0",
     "mdx-deck": "3.0.13"
   },
   "name": "my-deck"
